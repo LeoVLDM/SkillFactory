@@ -48,3 +48,21 @@ data[data['vote_average']>data.quantile(0.99, numeric_only=True)['vote_average']
 
 **Вывод.** Второй пункт пропущен - владение функциями. Поэтому минус 1 балл.\
 Оказалось, имеется ввиду собственные функции.
+
+### Upd. Добавил функцию сохранения ответов в словарь:
+```python
+def save_answer(answer, data_tmp):
+    """Функция сохранения ответов в словарь"""
+    type_data = type(data_tmp)  # тип данных в переменную
+    # print(type_data)
+    
+    if type_data is pd.core.frame.DataFrame:  # если датафрейм, получение названия фильма с идентификатором
+        original_title = data_tmp.original_title.to_string(index=False)
+        imdb_id = data_tmp.imdb_id.to_string(index=False)
+        answers[answer] = f"{original_title} ({imdb_id})"  # строка фильма с идентификатором в скобках
+        
+    elif type_data is int or type_data is str:  # если число или строка 
+        answers[answer] = data_tmp
+    
+    print(answers[answer])  # вывод ответа для проверки
+```
